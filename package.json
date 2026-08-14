@@ -1,6 +1,6 @@
 {
   "name": "@digitalsac/wa-sticker",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Criador de sticker",
   "main": "dist",
   "types": "dist",

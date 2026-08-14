@@ -12,11 +12,14 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
+          registry-url: https://registry.npmjs.org
       - run: npm install
       # Build explícito: o npm v12 desliga allowScripts por padrão, então o
       # hook `prepublish` deixa de rodar e o dist/ (gitignored) não seria gerado.
@@ -30,6 +33,7 @@ jobs:
             exit 1
           fi
           echo "NPM_TOKEN presente"
-      - uses: JS-DevTools/npm-publish@v1
+      # v4.1.5: runtime Node 24, sem set-output deprecated
+      - uses: JS-DevTools/npm-publish@v4.1.5
         with:
           token: ${{ secrets.NPM_TOKEN }}
