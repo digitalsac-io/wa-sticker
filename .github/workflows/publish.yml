@@ -16,6 +16,9 @@ jobs:
         with:
           node-version: 22
       - run: npm install
+      # Build explícito: o npm v12 desliga allowScripts por padrão, então o
+      # hook `prepublish` deixa de rodar e o dist/ (gitignored) não seria gerado.
+      - run: npm run build
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
