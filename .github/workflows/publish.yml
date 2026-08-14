@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - "package.json"
+  # Permite disparar manualmente pelo botão "Run workflow" na aba Actions
+  workflow_dispatch:
 
 jobs:
   publish:
