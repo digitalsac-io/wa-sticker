@@ -2,7 +2,6 @@ import { existsSync, readFile, writeFile } from 'fs-extra'
 import { IStickerConfig, IStickerOptions } from './Types'
 import axios from 'axios'
 import Utils, { defaultBg } from './Utils'
-import { fromBuffer } from 'file-type'
 import convert from './internal/convert'
 import Exif from './internal/Metadata/Exif'
 import { StickerTypes } from './internal/Metadata/StickerTypes'
@@ -40,7 +39,10 @@ export class Sticker {
                       : axios.get(this.data as string, { responseType: 'arraybuffer' }).then(({ data }) => data))()
 
     private _getMimeType = async (data: Buffer): Promise<string> => {
-        const type = await fromBuffer(data)
+        // file-type >= 17 é ESM puro e renomeou fromBuffer -> fileTypeFromBuffer.
+        // Como este pacote compila para CommonJS, o carregamento tem que ser dinâmico.
+        const { fileTypeFromBuffer } = await import('file-type')
+        const type = await fileTypeFromBuffer(data)
         if (!type) {
             if (typeof this.data === 'string') return 'image/svg+xml'
             throw new Error('Invalid file type')

@@ -1,6 +1,6 @@
 {
   "name": "@digitalsac/wa-sticker",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Criador de sticker",
   "main": "dist",
   "types": "dist",
@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "axios": "^1.11.0",
-    "file-type": "^16.5.3",
+    "file-type": "^21.3.4",
     "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^10.0.0",
     "node-webpmux": "^3.1.0",
