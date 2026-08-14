@@ -19,6 +19,15 @@ jobs:
       # Build explícito: o npm v12 desliga allowScripts por padrão, então o
       # hook `prepublish` deixa de rodar e o dist/ (gitignored) não seria gerado.
       - run: npm run build
+      # Falha cedo e com mensagem clara se o secret não estiver configurado,
+      # em vez do stack trace confuso da action de publish.
+      - name: Verificar NPM_TOKEN
+        run: |
+          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
+            echo "::error::NPM_TOKEN ausente. Crie em Settings > Secrets and variables > Actions > Repository secrets (aba Secrets, não Variables) deste repositório."
+            exit 1
+          fi
+          echo "NPM_TOKEN presente"
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
